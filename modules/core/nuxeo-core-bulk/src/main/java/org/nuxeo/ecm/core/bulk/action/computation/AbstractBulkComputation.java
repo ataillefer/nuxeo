@@ -137,7 +137,10 @@ public abstract class AbstractBulkComputation extends AbstractComputation {
                 String username = command.getUsername();
                 String repository = command.getRepository();
                 try (NuxeoLoginContext loginContext = loginSystemOrUser(username)) {
-                    CoreSession session = CoreInstance.getCoreSession(repository);
+                    CoreSession session = null;
+                    if (repository != null) {
+                        session = CoreInstance.getCoreSession(repository);
+                    }
                     compute(session, batch, command.getParams());
                 }
             } catch (LoginException e) {
