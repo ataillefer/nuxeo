@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.runtime.test.migration.dummy" version="1.0">
+
+  <extension target="org.nuxeo.runtime.migration.MigrationService" point="configuration">
+
+    <migration id="dummy-migration">
+      <description label="migration.dummy">Dummy Migration</description>
+      <class>org.nuxeo.runtime.migration.DummyMigrator</class>
+      <defaultState>before</defaultState>
+      <state id="before">
+        <description label="migration.dummy.before">before dummy migration state</description>
+      </state>
+      <state id="after">
+        <description label="migration.dummy.after">after dummy migration state</description>
+      </state>
+
+      <step id="before-to-after" fromState="before" toState="after">
+        <description label="migration.dummy.before-to-after">Migrate dummy state from before to after</description>
+      </step>
+    </migration>
+
+  </extension>
+
+</component>
