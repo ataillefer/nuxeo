@@ -32,6 +32,14 @@ RUN mkdir -p /tmp/nuxeo-distribution \
 FROM centos:7
 LABEL maintainer="Nuxeo <packagers@nuxeo.com>"
 
+ARG BUILD_TAG
+ARG VERSION
+ARG SCM_REF
+
+LABEL org.nuxeo.build-tag=$BUILD_TAG
+LABEL org.nuxeo.scm-ref=$SCM_REF
+LABEL org.nuxeo.version=$VERSION
+
 RUN yum -y update && yum -y --setopt=skip_missing_names_on_install=False install \
   java-11-openjdk java-11-openjdk-devel \
   less \
