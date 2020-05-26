@@ -22,9 +22,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.nuxeo.apidoc.api.BaseNuxeoArtifact;
 import org.nuxeo.apidoc.api.BundleGroup;
+import org.nuxeo.apidoc.api.NuxeoArtifactComparator;
 import org.nuxeo.ecm.core.api.Blob;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -73,7 +75,10 @@ public class BundleGroupImpl extends BaseNuxeoArtifact implements BundleGroup {
         this(key, version, Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
     }
 
-    void addParent(String bgId) {
+    /**
+     * @since 11.1
+     */
+    public void addParent(String bgId) {
         parentIds.add(bgId);
     }
 
@@ -96,17 +101,18 @@ public class BundleGroupImpl extends BaseNuxeoArtifact implements BundleGroup {
 
     @Override
     public List<BundleGroup> getSubGroups() {
-        return subGroups;
+        return Collections.unmodifiableList(
+                subGroups.stream().sorted(new NuxeoArtifactComparator()).collect(Collectors.toList()));
     }
 
     @Override
     public List<String> getBundleIds() {
-        return bundleIds;
+        return Collections.unmodifiableList(bundleIds.stream().sorted().collect(Collectors.toList()));
     }
 
     @Override
     public List<String> getParentIds() {
-        return parentIds;
+        return Collections.unmodifiableList(parentIds);
     }
 
     @Override

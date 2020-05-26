@@ -253,12 +253,6 @@ public class RepositoryDistributionSnapshot extends BaseNuxeoArtifactDocAdapter 
                                                                                   .collect(Collectors.toList());
     }
 
-    @Override
-    public List<String> getBundleGroupChildren(String groupId) {
-        BundleGroup bg = getChild(BundleGroup.class, BundleGroup.TYPE_NAME, BundleGroup.PROP_KEY, groupId);
-        return bg.getBundleIds();
-    }
-
     public List<String> getBundleGroupIds() {
         return getChildren(BundleGroup.class, BundleGroup.TYPE_NAME).stream()
                                                                     .map(NuxeoArtifact::getId)
