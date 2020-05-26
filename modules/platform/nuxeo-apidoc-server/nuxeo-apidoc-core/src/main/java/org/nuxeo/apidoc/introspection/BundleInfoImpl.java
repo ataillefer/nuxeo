@@ -42,6 +42,8 @@ public class BundleInfoImpl extends BaseNuxeoArtifact implements BundleInfo {
 
     protected String manifest;
 
+    protected String location;
+
     protected final List<String> requirements = new ArrayList<>();
 
     protected String groupId;
@@ -79,18 +81,17 @@ public class BundleInfoImpl extends BaseNuxeoArtifact implements BundleInfo {
         // components will be handled by json managed reference
     }
 
+    public BundleInfoImpl(String bundleId) {
+        this.bundleId = bundleId;
+    }
+
+    @Override
     public BundleGroup getBundleGroup() {
         return bundleGroup;
     }
 
     public void setBundleGroup(BundleGroup bundleGroup) {
         this.bundleGroup = bundleGroup;
-    }
-
-    protected String location;
-
-    public BundleInfoImpl(String bundleId) {
-        this.bundleId = bundleId;
     }
 
     @Override
