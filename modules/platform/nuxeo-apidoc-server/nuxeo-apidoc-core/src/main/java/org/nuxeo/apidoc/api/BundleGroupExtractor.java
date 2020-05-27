@@ -65,9 +65,7 @@ public class BundleGroupExtractor {
     public BundleGroupExtractor(Map<String, BundleInfo> bundles, String version) {
         this.bundles = bundles;
         this.version = version;
-        for (BundleInfo bundle : bundles.values()) {
-            registerBundle(bundle);
-        }
+        bundles.values().forEach(this::registerBundle);
         generateGroups(version);
     }
 
@@ -90,10 +88,7 @@ public class BundleGroupExtractor {
             groupId = VIRTUAL_BUNDLE_GROUP;
             ((BundleInfoImpl) bundle).setGroupId(groupId);
         }
-        if (!mavenGroups.containsKey(groupId)) {
-            mavenGroups.put(groupId, new ArrayList<String>());
-        }
-        mavenGroups.get(groupId).add(bundle.getId());
+        mavenGroups.computeIfAbsent(groupId, k -> new ArrayList<>()).add(bundle.getId());
     }
 
     protected void generateGroups(String version) {
@@ -130,9 +125,7 @@ public class BundleGroupExtractor {
                         }
                     }
                     if (grpArtifactIds.size() > 1) {
-                        for (String aid : grpArtifactIds) {
-                            artifactIds.remove(aid);
-                        }
+                        artifactIds.removeAll(grpArtifactIds);
                         mavenSubGroups.put(grp, grpArtifactIds);
                         artifactIds.add(grp);
                     }
